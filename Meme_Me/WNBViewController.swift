@@ -12,6 +12,7 @@ import UIKit
 class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     // List of outlets
+    // MARK: - Outlets
     
     @IBOutlet weak var topTextField: UITextField!
     
@@ -29,6 +30,7 @@ class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINav
  
     
     // List of instances
+    // MARK: - Instance variable
     
     let nextView = UIImagePickerController()
     
@@ -45,6 +47,7 @@ class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINav
     }
     
     // List of methods
+    // MARK: - Typical View Controller Methods
     
     required init?(coder aDecoder: NSCoder) {
         appDel = UIApplication.shared.delegate as? AppDelegate
@@ -86,9 +89,6 @@ class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINav
         ]
         bottomTextField.textAlignment = .center
         
-        
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,8 +99,18 @@ class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINav
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    deinit {
+        
+        // unsubscribes from the Keyboard Notifications when the view is
+        
+        self.unsubscribeFromKeyboardNotifications()
+    }
+
+    
 
     // ImagePicker Methods
+    // MARK: - Image Picker Methods
     
     @IBAction func openImagePicker(sender: AnyObject) {
         
@@ -163,11 +173,61 @@ class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINav
     
     @IBAction func cancelMeme(_ sender: AnyObject){
         
+        // Code executed when cancel button is pressed
+        // Resets meme image, top and bottom textfields back to nil
+        
         topTextField.text = nil
         bottomTextField.text = nil
         memeImage.image = nil
     }
+    
+    
+    func screenShotMethod() {
+        
+        // function to create the screen shot of the final Meme Image
+        // Triggered when the share button is tapped
+        
+        let layer = UIApplication.shared.keyWindow!.layer
+        let scale = UIScreen.main.scale
+        
+        topToolBar.isHidden = true
+        botToolBar.isHidden = true
+        
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
+        
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let screenshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        UIImageWriteToSavedPhotosAlbum(screenshot!, nil, nil, nil)
+        
+        let memeEntry:meme = meme(image:memeImage.image,
+                                  topText:topTextField.text,
+                                  botText:bottomTextField.text,
+                                  meme:screenshot)
+        
+        print ("memeList count: \(appDel?.memeList.count)")
+        appDel?.memeList.append(memeEntry)
+        print ("memeList count: \(appDel?.memeList.count)")
+        
+        topToolBar.isHidden = false
+        botToolBar.isHidden = false
+        
+        //let objectsToShare = screenshot as Any
+        //let activityVC = UIActivityViewController(activityItems: [objectsToShare], applicationActivities: nil)
+        
+        //activityVC.popoverPresentationController?.sourceView = mainView
+        //self.present(activityVC, animated: true, completion: nil)
+        
+        let image:UIImage = screenshot!
+        
+        let controller = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        self.present(controller, animated: true, completion: nil)
+        
+    }
 
+
+    // MARK: - Keyboard Notification Methods
     
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -187,6 +247,10 @@ class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINav
     
     func keyboardWillShow(notification: NSNotification) {
         
+        // Is triggered when the Keyboard Will Show
+        // Does nothing if the first responder if the top text field
+        // Moves the view up if the bottom text field is the first responder
+        
         if bottomTextField.isFirstResponder {
             
             let height = getKeyboardHeight(notification: notification)
@@ -204,6 +268,10 @@ class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINav
     }
     
     func keyboardWillHide(notification: NSNotification) {
+        
+        // Is triggered when the Keyboard Will Hide
+        // Does nothing if the first responder if the top text field
+        // Moves the view down if the bottom text field is the first responder
         
         if bottomTextField.isFirstResponder {
             
@@ -229,52 +297,9 @@ class WNBViewController: UIViewController, UIImagePickerControllerDelegate,UINav
         return keyboardSize.cgRectValue.size.height
     }
     
-    //Subscribe to the keyboard notification: UIKeyboardWillHideNotification
-    //Write the method “keyboardWillHide” to move the view frame back down to 0.
-
-    
-    deinit {
-        self.unsubscribeFromKeyboardNotifications()
-    }
     
     
-    func screenShotMethod() {
-        let layer = UIApplication.shared.keyWindow!.layer
-        let scale = UIScreen.main.scale
-        
-        topToolBar.isHidden = true
-        botToolBar.isHidden = true
-        
-        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
-        
-        layer.render(in: UIGraphicsGetCurrentContext()!)
-        let screenshot = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        UIImageWriteToSavedPhotosAlbum(screenshot!, nil, nil, nil)
-        
-        let memeEntry:meme = meme(image:memeImage.image,
-                                  topText:topTextField.text,
-                                  botText:bottomTextField.text,
-                                  meme:screenshot)
-        
-        appDel?.memeList.append(memeEntry)
-        
-        topToolBar.isHidden = false
-        botToolBar.isHidden = false
-        
-        //let objectsToShare = screenshot as Any
-        //let activityVC = UIActivityViewController(activityItems: [objectsToShare], applicationActivities: nil)
-                
-        //activityVC.popoverPresentationController?.sourceView = mainView
-        //self.present(activityVC, animated: true, completion: nil)
-        
-        let image:UIImage = screenshot!
-        
-        let controller = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        self.present(controller, animated: true, completion: nil)
-        
-    }
+    
 
     
 }
