@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D527001D1E2AEE44003C058A /* WNBTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527001C1E2AEE44003C058A /* WNBTableView.swift */; };
+		D527001F1E2AEE6F003C058A /* WNBCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527001E1E2AEE6F003C058A /* WNBCollectionView.swift */; };
 		D5284CD11DA8A21B00EC7DE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5284CD01DA8A21B00EC7DE6 /* AppDelegate.swift */; };
 		D5284CD31DA8A21B00EC7DE6 /* WNBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5284CD21DA8A21B00EC7DE6 /* WNBViewController.swift */; };
 		D5284CD61DA8A21B00EC7DE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5284CD41DA8A21B00EC7DE6 /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D527001C1E2AEE44003C058A /* WNBTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WNBTableView.swift; sourceTree = "<group>"; };
+		D527001E1E2AEE6F003C058A /* WNBCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WNBCollectionView.swift; sourceTree = "<group>"; };
 		D5284CCD1DA8A21B00EC7DE6 /* Meme_Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meme_Me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5284CD01DA8A21B00EC7DE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5284CD21DA8A21B00EC7DE6 /* WNBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WNBViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +65,8 @@
 				D5284CD01DA8A21B00EC7DE6 /* AppDelegate.swift */,
 				D5284CD21DA8A21B00EC7DE6 /* WNBViewController.swift */,
 				D5284CD41DA8A21B00EC7DE6 /* Main.storyboard */,
+				D527001C1E2AEE44003C058A /* WNBTableView.swift */,
+				D527001E1E2AEE6F003C058A /* WNBCollectionView.swift */,
 				D5284CD71DA8A21B00EC7DE6 /* Assets.xcassets */,
 				D5284CD91DA8A21B00EC7DE6 /* LaunchScreen.storyboard */,
 				D5284CDC1DA8A21B00EC7DE6 /* Info.plist */,
@@ -143,9 +149,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D527001D1E2AEE44003C058A /* WNBTableView.swift in Sources */,
 				D5284CD31DA8A21B00EC7DE6 /* WNBViewController.swift in Sources */,
 				D5284CD11DA8A21B00EC7DE6 /* AppDelegate.swift in Sources */,
 				D5F1FE051DAF29B500BB4751 /* topDelagate.swift in Sources */,
+				D527001F1E2AEE6F003C058A /* WNBCollectionView.swift in Sources */,
 				D5F1FE031DAF29A300BB4751 /* bottomDelagate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
